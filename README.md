@@ -53,7 +53,20 @@ Ordinarily the messages should come into the queue from a JBBC database however 
 
 #### Status Codes & Location Headers
 
-The design of the responses send back after different methods are implemented are vital because this metadata information helps in establishment of the event responses where the client can either receive a success response or a failed response that prompts another retry. The way this project achieves this is by using some of the most popular Status Codes along with their request types included in parenthesis. They include the following: - 200 - Okay (GET, DELETE, POST). - 201 - Message created (POST). - 204 - Message deleted (DELETE). - 302 - Resource found. - 304 - Resource not modified. - 307 - Temporary redirected. - 400 - Bad request (PUT, POST). - 401 - Unauthorised request. - 403 - Forbidden request. - 404 - Resource not found (GET, DELETE, PUT). - 415 - Unsupported media type (PUT, POST). - 500 - Internal server error (GET, DELETE, PUT, POST).
+The design of the responses send back after different methods are implemented are vital because this metadata information helps in establishment of the event responses where the client can either receive a success response or a failed response that prompts another retry. The way this project achieves this is by using some of the most popular Status Codes along with their request types included in parenthesis. They include the following:
+
+- 200 - Okay (GET, DELETE, POST).
+- 201 - Message created (POST).
+- 204 - Message deleted (DELETE).
+- 302 - Resource found.
+- 304 - Resource not modified.
+- 307 - Temporary redirected.
+- 400 - Bad request (PUT, POST).
+- 401 - Unauthorised request.
+- 403 - Forbidden request.
+- 404 - Resource not found (GET, DELETE, PUT).
+- 415 - Unsupported media type (PUT, POST).
+- 500 - Internal server error (GET, DELETE, PUT, POST).
 
 For example in this Post method to add a new message below, the Response returns a status code 201 - Created which could be used to evaluate the SMSsent Event.
 
@@ -81,10 +94,6 @@ For example in this example below an exception is thrown when the client attempt
     	return message;
     }
 
-### Logs
-
-Logs was not implemented.
-
 ### Shortcomings
 
 - The application services are not threat safe and does not implement a concurrency of protection.
@@ -92,14 +101,14 @@ Logs was not implemented.
 ### Future Modifications
 
 - Implement API metadata headers that allows for authentication using objects such as API Keys, also incude Cookies in the metadata to increase API fetch efficiency.
-- Use status code responses to automate retrying of messages.
+- Use status code responses to automate retrying of the process of message sending.
 
 ## Technologies, Libraries and Frameworks Used
 
         - Java
         - Tomcat v8.5 server
         - Jakarta RESTful Web Services (JAX-RS) a Jakarta EE API specification
-        = Jersey Framework
+        - Jersey Framework
 
 ## Profile Information
 
