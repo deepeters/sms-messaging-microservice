@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.dennispeters.java.smsmessenger.database.DatabaseClass;
+import org.dennispeters.java.smsmessenger.exceptions.MessageSendRequestException;
 import org.dennispeters.java.smsmessenger.model.Message;
 
 
@@ -43,7 +44,11 @@ public class MessageService {
 	}
 	
 	public Message getMessage(long id) {
-		return messages.get(id);
+		Message message = messages.get(id);
+		if (message == null) {
+			throw new MessageSendRequestException("Message with id " + id + " not found");
+		}
+		return message;
 	}
 	
 	public Message addMessage(Message message) {

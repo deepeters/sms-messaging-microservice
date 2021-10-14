@@ -10,11 +10,11 @@ The project uses the Java prohramming language. frameworks, libraries and server
 
 To implement and run the project locally the following are the step to step setup instructions:
 
-    - Use the Eclipse IDE to create a Maven Project. In this case the artefact ID is given as "smsmessenger"
-    - Select the Jersey Archetypes - For this project I selected to start with: - jersey-quickstart-webapp 2.16. (The version is very import as it has to correspond to the Tomcat version and the Java EE version used).
-    - After the initial project files are built, the next step is to add a server. This project applies Tomcat v8.5 (ensure that the version is v9 and below).
-    - The project should now contain a simple resource that contains a MyResource class that returns a dummy webpage with one simple resource.
-    - The project is now ready for development.
+- Use the Eclipse IDE to create a Maven Project. In this case the artefact ID is given as "smsmessenger"
+- Select the Jersey Archetypes - For this project I selected to start with: - jersey-quickstart-webapp 2.16. (The version is very import as it has to correspond to the Tomcat version and the Java EE version used).
+- After the initial project files are built, the next step is to add a server. This project applies Tomcat v8.5 (ensure that the version is v9 and below).
+- The project should now contain a simple resource that contains a MyResource class that returns a dummy webpage with one simple resource.
+- The project is now ready for development.
 
 ### Preparation
 
@@ -36,7 +36,7 @@ To implement and run the project locally the following are the step to step setu
 
 #### FILTER
 
-    The APIs managing the services use the @QueryParam annotation that maps over the data and returns method arguments. For example, the QueryParam accepts the year in the format {API}?year=2021 and could also pagenate the responses like {API}?start=1&size=2. The purpose of filtering is to allow for scaling of the application should the client have many messages to send to customers.
+The APIs managing the services use the @QueryParam annotation that maps over the data and returns method arguments. For example, the QueryParam accepts the year in the format {API}?year=2021 and could also pagenate the responses like {API}?start=1&size=2. The purpose of filtering is to allow for scaling of the application should the client have many messages to send to customers.
 
 ### Sending Messages
 
@@ -44,19 +44,7 @@ To implement and run the project locally the following are the step to step setu
 
 #### Status Codes & Location Headers
 
-    The design of the responses send back after different methods are implemented are vital because this metadata information helps in establishment of the event responses where the client can either receive a success response or a failed response that prompts another retry. The way this project achieves this is by using some of the most popular Status Codes along with their request types included in parenthesis. They include the following:
-    - 200 - Okay (GET, DELETE, POST).
-    - 201 - Message created (POST).
-    - 204 - Message deleted (DELETE).
-    - 302 - Resource found.
-    - 304 - Resource not modified.
-    - 307 - Temporary redirected.
-    - 400 - Bad request (PUT, POST).
-    - 401 - Unauthorised request.
-    - 403 - Forbidden request.
-    - 404 - Resource not found (GET, DELETE, PUT).
-    - 415 - Unsupported media type (PUT, POST).
-    - 500 - Internal server error (GET, DELETE, PUT, POST).
+The design of the responses send back after different methods are implemented are vital because this metadata information helps in establishment of the event responses where the client can either receive a success response or a failed response that prompts another retry. The way this project achieves this is by using some of the most popular Status Codes along with their request types included in parenthesis. They include the following: - 200 - Okay (GET, DELETE, POST). - 201 - Message created (POST). - 204 - Message deleted (DELETE). - 302 - Resource found. - 304 - Resource not modified. - 307 - Temporary redirected. - 400 - Bad request (PUT, POST). - 401 - Unauthorised request. - 403 - Forbidden request. - 404 - Resource not found (GET, DELETE, PUT). - 415 - Unsupported media type (PUT, POST). - 500 - Internal server error (GET, DELETE, PUT, POST).
 
     For example in this Post method to add a new message below, the Response returns a status code 201 - Created which could be used to evaluate the SMSsent Event.
 
@@ -72,13 +60,27 @@ To implement and run the project locally the following are the step to step setu
 
 ### Handling Exceptions
 
+Exceptions form the basis of the response the application will return to the client so that they can know whether all SMSs were sent to customers or not and whether to retry to resend them.
+
+For example in this example below an exception is thrown when the client attempts to get a message and sets a foundation for the next steps the client may attempt to implement.
+
+    	public Message getMessage(long id) {
+    	Message message = messages.get(id);
+    	if (message == null) {
+    		throw new MessageSendRequestException("Message with id " + id + " not found")
+    	}
+    	return message;
+    }
+
+### Logs
+
 ### Shortcomings
 
-    -   The application services are not threat safe and does not implement a concurrency of protection.
+- The application services are not threat safe and does not implement a concurrency of protection.
 
 ### Future Modifications
 
-    - Implement API metadata headers that allows for authentication using objects such as API Keys, also incude Cookies in the metadata to increase API fetch efficiency.
+- Implement API metadata headers that allows for authentication using objects such as API Keys, also incude Cookies in the metadata to increase API fetch efficiency.
 
 ## Technologies, Libraries and Frameworks Used
 
