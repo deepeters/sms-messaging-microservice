@@ -16,29 +16,38 @@ To implement and run the project locally the following are the step to step setu
 - The project should now contain a simple resource that contains a MyResource class that returns a dummy webpage with one simple resource.
 - The project is now ready for development.
 
-### Preparation
-
-### Installations
-
 ## BDD
 
 ### Services
 
+Using the services in the application, the idea is to have a client use the resource to distribute messages as SMSs to customers each with a unique phone number and in the case where a request encounters an error, receive an error message with a status code which determines whether the client should resend the message.
+
 ### APIs
+
+The development of APIs applies the Richardson Maturity Model to measure level RESTfulness which includes
+
+- Level 3 - Applies the Haetous model using the rel and href attributes.
+- Level 2 - Applies status codes.
+- Level 1 - Individual URI for each resource.
+- Level 0 - Not RESTful.
+
+The decisons made about the API aims to accomplish easy deployment of APIs, Scaling, Flexibility and Technology agnosticity. Some of the features are as follows:
 
 #### GET
 
+In JAX-RS the GET method could either return an XML or JSON data formats. The annotation for this output is the @XMLRootElement.
+
 #### POST
 
-#### PUT
+- To consume data from the API the annotation @Consumes specifies the expected request body format which in this case is included in the header requirements as the ContentType which is indicated as application/json.
 
-#### DELETE
-
-#### FILTER
+#### FILTERING
 
 The APIs managing the services use the @QueryParam annotation that maps over the data and returns method arguments. For example, the QueryParam accepts the year in the format {API}?year=2021 and could also pagenate the responses like {API}?start=1&size=2. The purpose of filtering is to allow for scaling of the application should the client have many messages to send to customers.
 
-### Sending Messages
+### Data
+
+Ordinarily the messages should come into the queue from a JBBC database however in the interest of accomplishing the logic of the services in this project, in memory set of objects are used.
 
 ### Event Responses
 
@@ -74,6 +83,8 @@ For example in this example below an exception is thrown when the client attempt
 
 ### Logs
 
+Logs was not implemented.
+
 ### Shortcomings
 
 - The application services are not threat safe and does not implement a concurrency of protection.
@@ -81,6 +92,7 @@ For example in this example below an exception is thrown when the client attempt
 ### Future Modifications
 
 - Implement API metadata headers that allows for authentication using objects such as API Keys, also incude Cookies in the metadata to increase API fetch efficiency.
+- Use status code responses to automate retrying of messages.
 
 ## Technologies, Libraries and Frameworks Used
 
